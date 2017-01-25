@@ -1,10 +1,13 @@
 #!/bin/bash
 
+set -a
+source ./compose/variables.env
+
 docker_init() {
   docker-compose \
     -f ./compose/docker-compose.yml \
     -f ./compose/docker-compose.init.yml \
-    -p "telebumbo_app" \
+    -p $PROJECT_NAME \
     "$@"
 }
 

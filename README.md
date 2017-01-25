@@ -3,7 +3,7 @@
 - [docker-compose](https://docs.docker.com/compose/install/)
 
 make sure docker group is added (so docker can open ports without sudo)
-```
+```bash
 sudo groupadd docker
 sudo gpasswd -a ${USER} docker
 sudo systemctl restart docker
@@ -27,8 +27,8 @@ git submodule update --recursive
 ./shell.sh [service_name]
 ```
 
-## Gotchas
-##### Web-Client & Web-Api
+# Gotchas
+#### Web-Client & Web-Api
 To install packages, use `shell.sh`. A weird issue is that webpack cannot detect a new
 packages _after_ you require it in a file given it is not already installed. Therefore, when
 adding new packages follow this order:
