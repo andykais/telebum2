@@ -4,5 +4,13 @@
 services/web-api/node_modules
 services/web-client/node_modules
 
-# database
+# build folders
+services/web-api/dist
+services/web-client/dist
+
+# tern
+.tern-port
+
+# database yarn cache
 volumes
+
