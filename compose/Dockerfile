@@ -1,0 +1,9 @@
+FROM node:7.4
+
+WORKDIR /usr/src/app
+
+RUN npm install -g yarn
+#RUN echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
+#RUN sysctl -w fs.inotify.max_user_instances=524288
+
+COPY ./scripts/wait-for-it/wait-for-it.sh /usr/bin/wait-for-it.sh

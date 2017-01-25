@@ -1,0 +1,19 @@
+version: '2'
+services:
+  nginx:
+    env_file:
+      - ./variables.env
+    ports:
+      - '${NGINX_PORT}:${NGINX_PORT}'
+  web-client:
+    command: yarn start
+    ports: 
+      - '${WEB_CLIENT_PORT}:${WEB_CLIENT_PORT}'
+  web-api:
+    command: yarn start
+    ports: 
+      - '${WEB_API_PORT}:${WEB_API_PORT}'
+  postgres:
+    ports:
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
+

@@ -1,0 +1,6 @@
+version: '2'
+services:
+  web-client:
+    command: yarn install
+  web-api:
+    command: yarn install
