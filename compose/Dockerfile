@@ -1,7 +1,9 @@
 FROM node:7.4
 
 WORKDIR /usr/src/app
+ENV DEBIAN_FRONTEND noninteractive
 
+RUN apt-get update && apt-get install -y ocaml libelf-dev
 RUN npm install -g yarn
 #RUN echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
 #RUN sysctl -w fs.inotify.max_user_instances=524288

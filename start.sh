@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd "$(dirname "$0")"
+
 set -a
 source ./compose/variables.env
 
@@ -13,7 +15,7 @@ docker_dev() {
 
 case $1 in
   dev)
-    docker_dev up
+    docker_dev up $2
     ;;
   prod)
     docker_prod up
