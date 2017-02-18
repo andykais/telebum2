@@ -5,8 +5,13 @@ import reducers from './reducers'
 
 
 export default function configureStore() {
+  const logger = createLogger({
+    stateTransformer: (state) =>
+      state.toJS()
+  })
+
   const middleware = [
-    createLogger()
+    logger
   ]
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 

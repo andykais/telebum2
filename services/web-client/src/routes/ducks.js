@@ -11,7 +11,6 @@ const initialState = fromJS({
 export default function routeReducer(state = initialState, action) {
   switch (action.type) {
     case LOCATION_CHANGE:
-      console.log(action.payload)
       return state.set('locationBeforeTransitions', fromJS(action.payload))
     default:
       return state

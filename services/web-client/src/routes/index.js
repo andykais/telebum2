@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import createBrowserHistory from 'history/createBrowserHistory'
 import { Router } from 'react-router'
-import { Route, Link } from 'react-router-dom'
 
 import { changeLocation } from './ducks'
-import App from '../containers/App'
+import Routes from './routes'
 
 const history = createBrowserHistory()
 
@@ -25,15 +24,14 @@ class ReduxRouter extends Component {
     this.unsubscribe()
   }
 
+  componentWillReceiveProps() {
+    console.log('d')
+  }
+
   render() {
     return (
       <Router history={history}>
-      <div>
-      <li><Link to='/test'>Test</Link></li>
-      <li><Link to='/'>home </Link></li>
-      <Route exact path='/' component={App}/>
-      <Route path='/test' render={() => <div>test page</div>}/>
-      </div>
+        <Routes/>
       </Router>
     )
 
