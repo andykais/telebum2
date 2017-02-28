@@ -13,8 +13,8 @@ docker_init() {
     "$@"
 }
 
-docker_init build
+docker_init build $@
 [[ $? != 0 ]] && exit 1 # exits if build fails
 docker_init up web-api
 docker_init up web-client
-docker_init stop postgres
+docker_init stop

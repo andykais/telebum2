@@ -13,24 +13,45 @@ services:
       - web-client
       - web-api
   web-client:
-    build: .
+    build:
+      context: .
+      dockerfile: ./images/Dockerfile-javascript
     volumes:
       - ../services/web-client:/usr/src/app
       - ../volumes/yarn-cache/:/usr/local/share/.cache/yarn
     networks:
       - front
+      - db
   web-api:
-    build: .
+    build:
+      context: .
+      dockerfile: ./images/Dockerfile-scala
     entrypoint: api_entrypoint.sh
     volumes:
-      - ../services/web-api:/usr/src/app
+      #- ../services/web-api/build.sbt:/usr/src/app/build.sbt
+      #- ../services/web-api/src:/usr/src/app/src
+      - ../services/web-api:/usr/src/app/
+      #- ../services/web-api/project/build.properties:/usr/src/app/project/build.properties
+      #- ../volumes/web-api-project:/usr/src/app
+      - ../volumes/sbt-cache/:/root/.ivy2
       - ./scripts/api_entrypoint.sh:/usr/bin/api_entrypoint.sh
-      - ../volumes/yarn-cache/:/usr/local/share/.cache/yarn
     networks:
       - front
       - db
     depends_on:
       - postgres
+  #web-api:
+    #build: .
+    #entrypoint: api_entrypoint.sh
+    #volumes:
+      #- ../services/web-api:/usr/src/app
+      #- ./scripts/api_entrypoint.sh:/usr/bin/api_entrypoint.sh
+      #- ../volumes/yarn-cache/:/usr/local/share/.cache/yarn
+    #networks:
+      #- front
+      #- db
+    #depends_on:
+      #- postgres
   postgres:
     image: postgres:9.6
     volumes:

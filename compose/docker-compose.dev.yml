@@ -10,7 +10,10 @@ services:
     ports: 
       - '${WEB_CLIENT_PORT}:${WEB_CLIENT_PORT}'
   web-api:
-    command: yarn start
+    command: sbt run
+    #volumes:
+      #- ../services/web-api/sbt-root/plugins.sbt:/root/.sbt/0.13/plugins/plugins.sbt
+      #- ../services/web-api/sbt-root/build.sbt:/root/.sbt/0.13/plugins/build.sbt
     ports: 
       - '${WEB_API_PORT}:${WEB_API_PORT}'
   postgres:

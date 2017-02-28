@@ -3,4 +3,4 @@ services:
   web-client:
     command: yarn install
   web-api:
-    command: yarn install
+    command: sbt update

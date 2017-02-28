@@ -1,0 +1,32 @@
+FROM openjdk:8
+
+WORKDIR /usr/src/app
+ENV DEBIAN_FRONTEND noninteractive
+ENV SCALA_VERSION 2.11.8
+ENV SBT_VERSION 0.13.13
+
+# Scala expects this file
+#RUN touch /usr/lib/jvm/java-8-openjdk-amd64/release
+# Install Scala
+## Piping curl directly in tar
+
+RUN mkdir /root/sbt /root/scala \
+  && touch /usr/lib/jvm/java-8-openjdk-amd64/release \
+  && curl -fsL http://downloads.lightbend.com/scala/${SCALA_VERSION}/scala-${SCALA_VERSION}.tgz \
+  | tar xfz - -C ~/scala --strip-components 1 \
+  && ln -s ~/scala/bin/* /usr/bin/ \
+  && curl -fsL https://dl.bintray.com/sbt/native-packages/sbt/${SBT_VERSION}/sbt-${SBT_VERSION}.tgz \
+  | tar xfz - -C ~/sbt --strip-components 1 \
+  && ln -s ~/sbt/bin/* /usr/bin/
+
+
+#RUN apt-get update \
+  #&& apt-get install -y apt-transport-https \
+  #&& echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list \
+  #&& apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823 \
+  #&& apt-get update \
+  #&& apt-get install -y sbt
+
+
+
+COPY ./scripts/wait-for-it/wait-for-it.sh /usr/bin/wait-for-it.sh

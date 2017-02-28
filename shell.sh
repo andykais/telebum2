@@ -4,13 +4,12 @@ cd "$(dirname "$0")"
 # should stop the script if something fails
 set -e
 
-
 if [ -z "$1" ]; then
   echo "usage: $0 [service_name]"
   echo
   echo "Available Services:"
   docker-compose -f ./compose/docker-compose.yml config --services | while read line; do
-  if docker ps | grep $line 2>&1>/dev/null; then
+  if docker ps -a | grep $line 2>&1>/dev/null; then
     echo $line
   fi
 done
@@ -37,7 +36,12 @@ if [ -z "$CONTAINER_ID" ]; then
       -f ./compose/docker-compose.yml \
       -f ./compose/docker-compose.dev.yml \
       -f ./compose/docker-compose.tty.yml \
-      run --no-deps --service-ports $1 bash
+      run --service-ports $1 bash
+    docker-compose \
+      -f ./compose/docker-compose.yml \
+      -f ./compose/docker-compose.dev.yml \
+      -f ./compose/docker-compose.tty.yml \
+      stop
   fi
 else
   set -o xtrace

@@ -3,3 +3,6 @@ services:
   web-client:
     stdin_open: true
     tty: true
+  web-api:
+    stdin_open: true
+    tty: true
