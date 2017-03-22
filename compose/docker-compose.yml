@@ -40,20 +40,10 @@ services:
       - db
     depends_on:
       - postgres
-  #web-api:
-    #build: .
-    #entrypoint: api_entrypoint.sh
-    #volumes:
-      #- ../services/web-api:/usr/src/app
-      #- ./scripts/api_entrypoint.sh:/usr/bin/api_entrypoint.sh
-      #- ../volumes/yarn-cache/:/usr/local/share/.cache/yarn
-    #networks:
-      #- front
-      #- db
-    #depends_on:
-      #- postgres
   postgres:
     image: postgres:9.6
+    env_file:
+      - ../services/postgres/variables.env
     volumes:
       - ../volumes/postgres-data:/var/lib/postgresql/data
     networks:

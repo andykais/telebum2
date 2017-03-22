@@ -25,6 +25,10 @@ git submodule update --recursive
 
 # enter into any running container in this project
 ./shell.sh [service_name]
+
+# get to a postgres client with
+docker run -it --network=telebumapp_db postgres \
+  psql -h postgres -p 5432 -d telebum -U postgres
 ```
 
 # Gotchas
@@ -32,6 +36,7 @@ git submodule update --recursive
 To install packages, use `shell.sh`. A weird issue is that webpack cannot detect a new
 packages _after_ you require it in a file given it is not already installed. Therefore, when
 adding new packages follow this order:
-1. ./shell [service]
-2. shell$ yarn add package
-3. _now_ import package to file 
+
+1. `./shell [service]`
+2. $ `yarn add package`
+3. _now_ import package to file

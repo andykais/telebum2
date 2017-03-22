@@ -4,6 +4,7 @@ cd "$(dirname "$0")"
 
 set -a
 source ./compose/variables.env
+sudo rm -rf ./volumes/postgres-data
 
 docker_init() {
   docker-compose \
