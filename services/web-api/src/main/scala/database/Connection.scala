@@ -10,37 +10,34 @@ import scalaz.stream._
 
 object Connection {
 
-  //val xa: Transactor[Task] = DriverManagerTransactor[Task](
   val xa = DriverManagerTransactor[Task](
     "org.postgresql.Driver",
     "jdbc:postgresql://postgres:5432/telebum",
     "postgres",
     "test"
   )
-  //def fourtyTwo(): scalaz.concurrent.Task[org.http4s.Response] = {
-  //def fourtyTwo: Process[ConnectionIO, Int] =
   case class SimpleNumber(n: Int)
-  case class TupleNumber(n: Int, r: Double)
-  case class Name(first: String)
+  case class Name(first: String, last: String)
+  case class Country(code: String, name: String, population: Int, gnp: Option[Double])
 
-//  def nRandom: ConnectionIO[TupleNumber] = {
-//    for {
-//      a <- sql"select 42".query[Int].unique
-//      b <- sql"select random()".query[Double].unique
-//    } yield (a, b)
-//  }
   def fourtyTwo: ConnectionIO[SimpleNumber] = {
-
     sql"select 42"
       .query[SimpleNumber]
       .unique
   }
 
-  def getArray: ConnectionIO[List[Name]] = {
+  def getNameProcess: Process[Task, Name] = {
+    sql"SELECT first, last FROM names"
+      .query[Name]
+      .process
+      .transact(xa)
+  }
 
-    val n = 4
-    sql"SELECT first FROM name"
+  def getNameList: Task[List[Name]] = {
+    sql"SELECT first, last FROM names"
       .query[Name]
       .list
+      .transact(xa)
   }
-  }
+
+}
