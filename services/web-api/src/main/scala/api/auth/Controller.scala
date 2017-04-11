@@ -1,4 +1,4 @@
-package server.auth
+package api.auth
 
 import org.http4s.dsl._
 import scalaz.concurrent.Task

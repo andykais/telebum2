@@ -31,16 +31,12 @@ object RootService {
       val filePath = "/graphiql" + (
         path.toString match {
           case "/" => "/index.html"
-          case _        => path.toString
+          case _   => path.toString
         }
       )
       StaticFile.fromResource(filePath, Some(request)).fold(NotFound())(Task.now)
     }
 
-
-
-          case _ -> Root => NotFound()
-
-
+    case _ -> Root => NotFound()
   }
 }
