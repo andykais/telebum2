@@ -29,6 +29,8 @@ git submodule update --recursive
 # get to a postgres client with
 docker run -it --network=telebumapp_db postgres:9.6 \
   psql -h postgres -p 5432 -d telebum -U postgres
+# or
+pgcli postgres://postgres:test@localhost:5432/telebum
 ```
 
 # Gotchas

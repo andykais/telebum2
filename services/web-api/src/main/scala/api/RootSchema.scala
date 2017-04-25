@@ -1,41 +1,29 @@
 package api
 
+import sangria.macros.derive._
 import sangria.schema._
 
-import Context.NameRepo
 
 object RootSchema {
-  // data
   case class Person(
-    id: String,
+    id: Int,
     first: String,
     last: String
   )
 
 
-  val PersonType =
-    ObjectType(
-      "Person",
-      "a person with data",
-      fields[NameRepo, Person](
-        Field("id", StringType,
-          Some("id of person"),
-          resolve = _.value.id),
-        Field("first", StringType,
-          Some("persons first name"),
-          resolve = _.value.first),
-        Field("last", StringType,
-          Some("persons last name"),
-          resolve = _.value.last)
-        )
-      )
-  val ID = Argument("id", StringType, description = "id of person")
+  val PersonType = deriveObjectType[Unit, Person](
+    DocumentField("first", "what I call me"),
+    DocumentField("last", "what I call my family"))
+
+  val ID = Argument("id", IntType, description = "id of person")
 
   val Query = ObjectType(
-    "Query", fields[NameRepo, Unit](
+    "Query", "the root of all queries",
+    fields[Repository, Unit](
       Field("person", OptionType(PersonType),
         arguments = ID :: Nil,
-        resolve = (ctx) => ctx.ctx.getPerson(ctx.arg(ID)))
+        resolve = ctx => ctx.ctx.getPerson(ctx.arg(ID)))
       )
     )
   val schema = Schema(Query)

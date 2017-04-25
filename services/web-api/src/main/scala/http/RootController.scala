@@ -5,13 +5,13 @@ import org.http4s.dsl._
 import org.http4s.Request
 import org.http4s.Response
 import org.http4s.{ParseFailure}
-import sangria.renderer.QueryRenderer
 import scalaz.concurrent.Task
 
+import database.Connection.xa
+import api.Repository
+import api.RootSchema.schema
 import graphql.GraphQlQueryDecoder.requestToQuery
 import graphql.GraphQlQueryExecutor.execute
-import api.RootSchema.schema
-import api.Context.NameRepo
 
 object Controller {
 
@@ -27,10 +27,12 @@ object Controller {
         case _ => InternalServerError()
       }
         case Right(graphqlQuery) => {
-          val renderConfig = QueryRenderer.Pretty.copy(renderComments = false)
-          println(QueryRenderer.render(graphqlQuery.document, renderConfig))
+          // print query to console
+          //import sangria.renderer.QueryRenderer
+          //val renderConfig = QueryRenderer.Pretty.copy(renderComments = false)
+          //println(QueryRenderer.render(graphqlQuery.document, renderConfig))
 
-          val executorFuture = execute(schema, graphqlQuery, new NameRepo)
+          val executorFuture = execute(schema, graphqlQuery, new Repository(xa))
           Ok(executorFuture)
         }
     })

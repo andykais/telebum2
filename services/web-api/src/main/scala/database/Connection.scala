@@ -9,7 +9,8 @@ object Connection {
 
   val xa = DriverManagerTransactor[Task](
     "org.postgresql.Driver",
-    "jdbc:postgresql://postgres:5432/telebum",
+    "jdbc:postgresql://localhost:5432/telebum",
+    //"jdbc:postgresql://postgres:5432/telebum",
     "postgres",
     "test"
   )
