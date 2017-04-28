@@ -26,15 +26,15 @@ object Controller {
         case ParseFailure(message, _) => BadRequest(message)
         case _ => InternalServerError()
       }
-        case Right(graphqlQuery) => {
+      case Right(graphqlQuery) => {
+
+        val executorFuture = execute(schema, graphqlQuery, new Repository())
+        Ok(executorFuture)
+      }
+    })
+  }
+}
           // print query to console
           //import sangria.renderer.QueryRenderer
           //val renderConfig = QueryRenderer.Pretty.copy(renderComments = false)
           //println(QueryRenderer.render(graphqlQuery.document, renderConfig))
-
-          val executorFuture = execute(schema, graphqlQuery, new Repository(xa))
-          Ok(executorFuture)
-        }
-    })
-  }
-}

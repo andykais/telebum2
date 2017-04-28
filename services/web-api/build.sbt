@@ -35,13 +35,13 @@ libraryDependencies ++= Seq(
 libraryDependencies += "org.typelevel" %% "cats-core" % "0.9.0"
 libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.6.4"
 
-scalacOptions ++= Seq(
-  "-unchecked",
-  "-deprecation",
-  "-feature",
-  "-Xfatal-warnings",
-  "-Xlint",
-  "-Ywarn-unused-import"
-)
+//scalacOptions ++= Seq(
+  //"-unchecked",
+  //"-deprecation",
+  //"-feature",
+  //"-Xfatal-warnings",
+  //"-Xlint",
+  //"-Ywarn-unused-import"
+//)
 maxErrors := 5
 triggeredMessage := Watched.clearWhenTriggered

@@ -23,4 +23,6 @@ object TelebumApi extends ServerApp {
       .mountService(services, "/")
       .withServiceExecutor(pool)
       .start
+
+  Scheduler.start()
 }
