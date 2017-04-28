@@ -15,25 +15,16 @@ class Repository {
       .unsafePerformSync
 
   }
-  import show.Schema.TVSeries
-  def searchTVSeries(name: String) = {
-    val searchString = s"%$name%"
-    //sql"""SELECT id FROM tvseries WHERE seriesname LIKE '%$name%'"""
-    sql"""SELECT seriesid, seriesname, genre, rating, imdb_id FROM tvseries WHERE seriesname LIKE $searchString"""
-    .query[TVSeries]
-    .list
-    .transact(xa)
-    .unsafePerformSync
-  }
+  import show.Repository.searchTVSeriesByName
+  def searchTVSeries(name: String) = searchTVSeriesByName(name)
 
-  import show.Schema.TVSeason
-  def getSeasons(id: Int) = {
-    sql"SELECT season FROM tvseasons WHERE seriesid = $id"
-    .query[TVSeason]
-    .list
-    .transact(xa)
-    .unsafePerformSync
-  }
+
+  import show.Repository.getTVSeriesSeason
+  def getSeasons(id: Int) = getTVSeriesSeason(id)
+
+  import show.Repository.getTVSeriesSeasonEpisodes
+  def getEpisodes(id: Int) = getTVSeriesSeasonEpisodes(id)
+
 }
 
 object Repository {
